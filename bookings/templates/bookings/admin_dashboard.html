@@ -1,0 +1,56 @@
+{% extends 'bookings/base.html' %}
+
+{% block content %}
+<header style="margin-bottom: 3rem;">
+    <h1 style="margin-bottom: 0.5rem;">Admin Dashboard</h1>
+    <p style="color: var(--text-muted);">Manage all reservations across the facility.</p>
+</header>
+
+<div class="glass-card" style="padding: 0; overflow: hidden;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+            <tr style="background: rgba(255, 255, 255, 0.05); border-bottom: 1px solid var(--glass-border);">
+                <th
+                    style="padding: 1.2rem 1.5rem; color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase;">
+                    Room</th>
+                <th
+                    style="padding: 1.2rem 1.5rem; color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase;">
+                    Staff</th>
+                <th
+                    style="padding: 1.2rem 1.5rem; color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase;">
+                    Start Time</th>
+                <th
+                    style="padding: 1.2rem 1.5rem; color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase;">
+                    End Time</th>
+                <th
+                    style="padding: 1.2rem 1.5rem; color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase;">
+                    Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr style="border-bottom: 1px solid var(--glass-border); transition: background 0.3s ease;"
+                onmouseover="this.style.background='rgba(255,255,255,0.02)'"
+                onmouseout="this.style.background='transparent'">
+                <td style="padding: 1.2rem 1.5rem; font-weight: 500;">{{ booking.room.name }}</td>
+                <td style="padding: 1.2rem 1.5rem;">{{ booking.user.username }}</td>
+                <td style="padding: 1.2rem 1.5rem;">{{ booking.start_time|date:"M d, Y H:i" }}</td>
+                <td style="padding: 1.2rem 1.5rem;">{{ booking.end_time|date:"M d, Y H:i" }}</td>
+                <td style="padding: 1.2rem 1.5rem;">
+                    <form method="post" action="{% url 'cancel_booking' booking.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn"
+                            style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.4rem 0.8rem; font-size: 0.8rem;">Cancel</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="padding: 3rem; text-align: center; color: var(--text-muted);">No bookings found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'bookings/base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+    <div class="glass-card">
+        <h1 style="margin-top: 0; margin-bottom: 0.5rem;">Book {{ room.name }}</h1>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Secure your time in this premium space.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">{{
+                    field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div style="color: #ef4444; font-size: 0.8rem; margin-top: 0.3rem;">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Confirm Booking</button>
+        </form>
+
+
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
+            <a href="/" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">&larr; Back to
+                Rooms</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

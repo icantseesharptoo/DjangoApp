@@ -1,0 +1,38 @@
+{% extends 'bookings/base.html' %}
+
+{% block content %}
+<header style="margin-bottom: 4rem; text-align: center;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;">Experience Excellence</h1>
+    <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+        Reserve world-class spaces designed for focus, collaboration, and breakthrough moments.
+    </p>
+</header>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2.5rem;">
+    {% for room in rooms %}
+    <div class="glass-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div
+            style="height: 200px; background-image: url('{{ room.image_url }}'); background-size: cover; background-position: center; border-bottom: 1px solid var(--glass-border);">
+        </div>
+        <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                <h2 style="margin: 0; font-size: 1.4rem;">{{ room.name }}</h2>
+                <span
+                    style="background: rgba(99, 102, 241, 0.2); color: #818cf8; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">
+                    Up to {{ room.capacity }} guests
+                </span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6;">
+                {{ room.description }}
+            </p>
+            <div style="margin-top: auto;">
+                <a href="{% url 'book_room' room.id %}" class="btn btn-primary"
+                    style="width: 100%; text-align: center; box-sizing: border-box;">Book this Room</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No rooms available at the moment.</p>
+    {% endfor %}
+</div>
+{% endblock %}
